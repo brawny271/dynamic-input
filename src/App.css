@@ -1,10 +1,10 @@
 .container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background: linear-gradient(to right, #e47d64, #fbc093);
+  padding: 20px;
 }
 
 .card {
@@ -12,9 +12,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 40px;
-  width: 100%;
-  max-width: 400px; /* Prevents stretching on larger screens */
+  display: inline-block;
   text-align: center;
+  max-width: 100%;
 }
 
 .info {
@@ -142,7 +142,12 @@ button.submit-btn:active {
 
 @media (max-width: 480px) {
   .card {
+    width: 100%;
     padding: 20px;
+    box-sizing: border-box;
+  }
+  .container {
+    padding: 10px;
   }
 
   .input-container input {
