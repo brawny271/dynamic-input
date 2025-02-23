@@ -1,38 +1,133 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Container centers the card on the page */
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
+  background-color: #f2f2f2;
 }
 
-.App-link {
-  color: #61dafb;
+/* Card container styling */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: auto;
+  min-width: 350px;
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Floating input styles */
+.input-container {
+  position: relative;
+  margin: 16px auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-container input {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-container input:hover {
+  border-color: #999;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Active state: blue linear gradient border */
+.input-container input:focus {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #007bff, #00bfff) 1;
+}
+
+/* Label centered vertically when input is empty */
+.input-container label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  background: #fff;
+  padding: 0 4px;
+  color: #aaa;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+/* When input is focused or filled, move label to top */
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 8px;
+  transform: none;
+  font-size: 12px;
+  color: #333;
+}
+
+/* Error state: red linear gradient border with increased border radius */
+.input-container.error input {
+  border: 2px solid;
+  border-radius: 8px;
+  border-image: linear-gradient(45deg, #ff0000, #ff7f7f) 1;
+}
+
+.input-container.error label {
+  color: #ff0000;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Submit Button Styling */
+button.submit-btn {
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #007bff, #00bfff);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.submit-btn:hover {
+  background: linear-gradient(45deg, #0056b3, #0080ff);
+  box-shadow: 0 6px 10px rgba(0, 123, 255, 0.5);
+}
+
+button.submit-btn:active {
+  background: linear-gradient(45deg, #004085, #0066cc);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for each letter */
+.letter {
+  opacity: 0;
+  display: inline-block;
+  animation: letterIn 0.1s forwards;
+}
+
+@keyframes letterIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
