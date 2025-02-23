@@ -23,7 +23,6 @@ const FloatingInput = forwardRef(({
     const validate = (val) => {
         let message = '';
         const trimmedVal = val.trim();
-
         if (!trimmedVal) {
             message = requiredMessage;
         } else if (trimmedVal.length < minLength) {
@@ -51,6 +50,11 @@ const FloatingInput = forwardRef(({
             const validationMessage = validate(value);
             setError(validationMessage);
             return validationMessage;
+        },
+        clear: () => {
+            setValue('');
+            setError('');
+            setTouched(false);
         }
     }));
 
@@ -71,10 +75,7 @@ const FloatingInput = forwardRef(({
     };
 
     return (
-        <div
-            className={`input-container ${error ? 'error' : ''}`}
-            style={{ width, height }}
-        >
+        <div className={`input-container ${error ? 'error' : ''}`} style={{ width, height }}>
             <input
                 type={type}
                 id="floatingInput"
@@ -94,6 +95,5 @@ const FloatingInput = forwardRef(({
         </div>
     );
 });
-
 
 export default FloatingInput;

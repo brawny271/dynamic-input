@@ -13,9 +13,9 @@ function App() {
       if (error) {
         return;
       }
+      inputRef.current.clear();
     }
     setButtonText("Submitted");
-
     setTimeout(() => {
       setButtonText("Submit");
     }, 1000);

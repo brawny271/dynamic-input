@@ -1,4 +1,3 @@
-/* Container centers the card on the page */
 .container {
   display: flex;
   flex-direction: column;
@@ -8,7 +7,6 @@
   background-color: #f2f2f2;
 }
 
-/* Card container styling */
 .card {
   background: #fff;
   border-radius: 8px;
@@ -19,7 +17,6 @@
   text-align: center;
 }
 
-/* Floating input styles */
 .input-container {
   position: relative;
   margin: 16px auto;
@@ -43,13 +40,11 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Active state: blue linear gradient border */
 .input-container input:focus {
   border: 2px solid;
   border-image: linear-gradient(45deg, #007bff, #00bfff) 1;
 }
 
-/* Label centered vertically when input is empty */
 .input-container label {
   position: absolute;
   top: 50%;
@@ -63,7 +58,6 @@
   transition: 0.2s ease all;
 }
 
-/* When input is focused or filled, move label to top */
 .input-container input:focus + label,
 .input-container input:not(:placeholder-shown) + label {
   top: -10px;
@@ -73,7 +67,6 @@
   color: #333;
 }
 
-/* Error state: red linear gradient border with increased border radius */
 .input-container.error input {
   border: 2px solid;
   border-radius: 8px;
@@ -90,7 +83,6 @@
   margin-top: 5px;
 }
 
-/* Submit Button Styling */
 button.submit-btn {
   padding: 10px 20px;
   background: linear-gradient(45deg, #007bff, #00bfff);
@@ -114,7 +106,6 @@ button.submit-btn:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Animation for each letter */
 .letter {
   opacity: 0;
   display: inline-block;
