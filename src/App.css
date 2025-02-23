@@ -17,6 +17,21 @@
   text-align: center;
 }
 
+.info {
+  text-align: left;
+  margin-bottom: 40px;
+  padding: 10px;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  background-color: #fafafa;
+  font-size: 14px;
+  color: #555;
+}
+
+.info p {
+  margin: 8px 0;
+}
+
 .input-container {
   position: relative;
   margin: 16px auto;

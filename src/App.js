@@ -39,6 +39,24 @@ function App() {
   return (
     <div className="container">
       <div className="card">
+        <div className="info">
+          <p>
+            <strong>Dynamic Component:</strong> Fully dynamic input with a
+            floating label and responsive design.
+          </p>
+          <p>
+            <strong>Validations:</strong> Implements required, min/max length,
+            pattern, numeric range, and custom validations.
+          </p>
+          <p>
+            <strong>Feedback:</strong> Error feedback (red border and label) on
+            blur; auto-clears when corrected.
+          </p>
+          <p>
+            <strong>Submission:</strong> Validates on submit, clears input on
+            success, and animates the "Submitted" text.
+          </p>
+        </div>
         <FloatingInput
           ref={inputRef}
           width="300px"
