@@ -11,9 +11,9 @@
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 60px;
-  width: auto;
-  min-width: 350px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px; /* Prevents stretching on larger screens */
   text-align: center;
 }
 
@@ -137,5 +137,21 @@ button.submit-btn:active {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 20px;
+  }
+
+  .input-container input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button.submit-btn {
+    font-size: 14px;
+    padding: 10px;
   }
 }
