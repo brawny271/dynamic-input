@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/dynamic-input/static/css/main.debb460c.css",
+    "main.js": "/dynamic-input/static/js/main.27d52e60.js",
+    "index.html": "/dynamic-input/index.html",
+    "main.debb460c.css.map": "/dynamic-input/static/css/main.debb460c.css.map",
+    "main.27d52e60.js.map": "/dynamic-input/static/js/main.27d52e60.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.debb460c.css",
+    "static/js/main.27d52e60.js"
+  ]
+}
