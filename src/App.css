@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f2f2f2;
+  background: linear-gradient(to right, #e47d64, #fbc093);
 }
 
 .card {
@@ -33,6 +33,7 @@
   outline: none;
   transition: border 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .input-container input:hover {
@@ -43,6 +44,7 @@
 .input-container input:focus {
   border: 2px solid;
   border-image: linear-gradient(45deg, #007bff, #00bfff) 1;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .input-container label {
