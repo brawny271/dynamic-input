@@ -1,10 +1,12 @@
 export const regexPatterns = {
   alphanumeric: /^[A-Za-z0-9]+$/,
-  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  username: /^(?!.*\s)[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/,
+  email: /^(?!.*\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   panCard: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
   bankAccount: /^[0-9]{9,18}$/,
   ifsc: /^[A-Z]{4}0[A-Z0-9]{6}$/,
   phoneGeneric: /^\+?[1-9]\d{1,14}$/,
+  phone: /^\d{10}$/,
   phoneIndian: /^[6-9]\d{9}$/,
   strongPassword:
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,

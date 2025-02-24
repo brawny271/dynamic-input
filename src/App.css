@@ -4,7 +4,6 @@
   justify-content: center;
   min-height: 100vh;
   background: linear-gradient(to right, #e47d64, #fbc093);
-  padding: 20px;
 }
 
 .card {
@@ -32,9 +31,15 @@
   margin: 8px 0;
 }
 
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .input-container {
   position: relative;
-  margin: 16px auto;
+  margin: 0 auto;
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
@@ -84,6 +89,11 @@
   color: #333;
 }
 
+.input-container.error input:focus + label,
+.input-container.error input:not(:placeholder-shown) + label {
+  color: #ff0000;
+}
+
 .input-container.error input {
   border: 2px solid;
   border-radius: 8px;
@@ -97,7 +107,7 @@
 .error-message {
   color: #ff0000;
   font-size: 12px;
-  margin-top: 5px;
+  text-align: start;
 }
 
 button.submit-btn {
@@ -109,13 +119,20 @@ button.submit-btn {
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  margin-top: 20px;
+  margin-top: 40px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button.submit-btn:hover {
   background: linear-gradient(45deg, #0056b3, #0080ff);
   box-shadow: 0 6px 10px rgba(0, 123, 255, 0.5);
+}
+
+button.submit-btn.disabled {
+  background: linear-gradient(45deg, #ccc, #aaa);
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
 }
 
 button.submit-btn:active {
