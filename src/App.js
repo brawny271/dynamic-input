@@ -9,19 +9,21 @@ function App() {
     phone: "",
     username: "",
     password: "",
+    age: "",
   };
   const initialErrorState = {
     email: "",
     phone: "",
     username: "",
     password: "",
+    age: "",
   };
   const [form, setForm] = useState(initialFormState);
   const [errors, setErrors] = useState(initialErrorState);
   const [buttonText, setButtonText] = useState("Submit");
 
   const handleChange = (field, value) => {
-    if (field === "phone") {
+    if (field === "phone" || field === "age") {
       value = value.replace(/\D/g, "");
     }
     if (field === "username") {
@@ -68,7 +70,7 @@ function App() {
           error = "Maximum length is 15 characters.";
         else if (!regexPatterns.username.test(trimmedValue))
           error =
-            "Username must be a combination of uppercase letters and digits.";
+            "Username must be a combination of letters, digits, and may include special characters (no spaces allowed).";
         break;
       case "password":
         if (!trimmedValue) error = "Password is required.";
@@ -79,6 +81,18 @@ function App() {
         else if (!regexPatterns.strongPassword.test(trimmedValue))
           error =
             "Password must include uppercase, lowercase, digit, and special character.";
+        break;
+      case "age":
+        if (!trimmedValue) {
+          error = "Age is required.";
+        } else {
+          const ageNumber = Number(trimmedValue);
+          if (ageNumber < 18) {
+            error = "Minimum age is 18.";
+          } else if (ageNumber > 100) {
+            error = "Maximum age is 100.";
+          }
+        }
         break;
       default:
         break;
@@ -92,18 +106,32 @@ function App() {
   };
 
   const handleSubmit = () => {
+    if (
+      !form.email &&
+      !form.phone &&
+      !form.username &&
+      !form.password &&
+      !form.age
+    ) {
+      alert("Please fill in the details.");
+      return;
+    }
     const emailError = validateField("email", form.email);
     const phoneError = validateField("phone", form.phone);
     const usernameError = validateField("username", form.username);
     const passwordError = validateField("password", form.password);
+    const ageError = validateField("age", form.age);
     const newErrors = {
       email: emailError,
       phone: phoneError,
       username: usernameError,
       password: passwordError,
+      age: ageError,
     };
     setErrors(newErrors);
-    if (emailError || phoneError || usernameError || passwordError) return;
+    if (emailError || phoneError || usernameError || passwordError || ageError)
+      return;
+    // alert("Submitted successfully!");
     setForm(initialFormState);
     setButtonText("Submitted");
     setTimeout(() => {
@@ -197,6 +225,16 @@ function App() {
             type="password"
             minLength={8}
             maxLength={20}
+          />
+          <FloatingInput
+            value={form.age}
+            onChange={(e) => handleChange("age", e.target.value)}
+            onBlur={() => handleBlur("age")}
+            error={errors.age}
+            width="300px"
+            height="40px"
+            labelText="Age"
+            type="number"
           />
         </div>
         <button
