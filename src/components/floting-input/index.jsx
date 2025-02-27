@@ -30,7 +30,8 @@ function FloatingInput({
     };
 
     const validateField = (field, val) => {
-        if (/\s/.test(val)) {
+
+        if (/\s/.test(val) && !["fullName"].includes(field)) {
             return "Spaces are not allowed.";
         }
         const trimmedValue = val;
@@ -86,7 +87,56 @@ function FloatingInput({
                     }
                 }
                 break;
+            case "panCard":
+                if (!trimmedValue) errorMessage = "PAN card number is required.";
+                else if (!regexPatterns.panCard.test(trimmedValue))
+                    errorMessage = "Invalid PAN card number.";
+                break;
+            case "bankAccount":
+                if (!trimmedValue) errorMessage = "Bank account number is required.";
+                else if (!regexPatterns.bankAccount.test(trimmedValue))
+                    errorMessage = "Invalid bank account number.";
+                break;
+            case "ifsc":
+                if (!trimmedValue) errorMessage = "IFSC code is required.";
+                else if (!regexPatterns.ifsc.test(trimmedValue))
+                    errorMessage = "Invalid IFSC code.";
+                break;
+            case "url":
+                if (!trimmedValue) errorMessage = "URL is required.";
+                else if (!regexPatterns.url.test(trimmedValue))
+                    errorMessage = "Invalid URL.";
+                break;
+            case "address":
+                if (!trimmedValue) errorMessage = "Address is required.";
+                else if (trimmedValue.length < 5)
+                    errorMessage = "Address must be at least 5 characters long.";
+                break;
+            case "zipCode":
+                if (!trimmedValue) errorMessage = "Zip code is required.";
+                else if (!regexPatterns.zipCode.test(trimmedValue))
+                    errorMessage = "Invalid zip code.";
+                break;
+            case "ssn":
+                if (!trimmedValue) errorMessage = "SSN is required.";
+                else if (!regexPatterns.ssn.test(trimmedValue))
+                    errorMessage = "Invalid SSN format.";
+                break;
+            case "ipv4":
+                if (!trimmedValue) errorMessage = "IPv4 address is required.";
+                else if (!regexPatterns.ipv4.test(trimmedValue))
+                    errorMessage = "Invalid IPv4 address.";
+                break;
+            case "alphanumeric":
+                if (!trimmedValue) errorMessage = "This field is required.";
+                else if (!regexPatterns.alphanumeric.test(trimmedValue))
+                    errorMessage = "Only letters and numbers are allowed.";
+                break;
             default:
+                if (!trimmedValue) {
+                    errorMessage =
+                        field.charAt(0).toUpperCase() + field.slice(1) + " is required.";
+                }
                 break;
         }
         return errorMessage;
