@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
 import FloatingInput from "./components/floting-input";
-import { regexPatterns } from "./Rgex";
 
 function App() {
   const initialFormState = {
@@ -22,117 +21,36 @@ function App() {
   const [errors, setErrors] = useState(initialErrorState);
   const [buttonText, setButtonText] = useState("Submit");
 
-  const handleChange = (field, value) => {
-    if (field === "phone" || field === "age") {
-      value = value.replace(/\D/g, "");
-    }
-    if (field === "username") {
-      value = value.replace(
-        /[^A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g,
-        ""
-      );
-    }
-    value = value.replace(/\s/g, "");
+  const updateField = (field, value, error) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: "" }));
-  };
-
-  const validateField = (field, value) => {
-    if (/\s/.test(value)) {
-      return "Spaces are not allowed.";
-    }
-    const trimmedValue = value;
-    let error = "";
-    switch (field) {
-      case "email":
-        if (!trimmedValue) error = "Email is required.";
-        else if (trimmedValue.length < 8)
-          error = "Minimum length is 8 characters.";
-        else if (trimmedValue.length > 50)
-          error = "Maximum length is 50 characters.";
-        else if (!regexPatterns.email.test(trimmedValue))
-          error = "Please enter a valid email address.";
-        break;
-      case "phone":
-        if (!trimmedValue) {
-          error = "Phone number is required.";
-        } else if (trimmedValue.length !== 10) {
-          error = "Phone number must be exactly 10 digits.";
-        } else if (!regexPatterns.phone.test(trimmedValue)) {
-          error = "Please enter a valid phone number.";
-        }
-        break;
-      case "username":
-        if (!trimmedValue) error = "Username is required.";
-        else if (trimmedValue.length < 5)
-          error = "Minimum length is 5 characters.";
-        else if (trimmedValue.length > 15)
-          error = "Maximum length is 15 characters.";
-        else if (!regexPatterns.username.test(trimmedValue))
-          error =
-            "Username must be a combination of letters, digits, and may include special characters (no spaces allowed).";
-        break;
-      case "password":
-        if (!trimmedValue) error = "Password is required.";
-        else if (trimmedValue.length < 8)
-          error = "Minimum length is 8 characters.";
-        else if (trimmedValue.length > 20)
-          error = "Maximum length is 20 characters.";
-        else if (!regexPatterns.strongPassword.test(trimmedValue))
-          error =
-            "Password must include uppercase, lowercase, digit, and special character.";
-        break;
-      case "age":
-        if (!trimmedValue) {
-          error = "Age is required.";
-        } else {
-          const ageNumber = Number(trimmedValue);
-          if (ageNumber < 18) {
-            error = "Minimum age is 18.";
-          } else if (ageNumber > 100) {
-            error = "Maximum age is 100.";
-          }
-        }
-        break;
-      default:
-        break;
-    }
-    return error;
-  };
-
-  const handleBlur = (field) => {
-    const error = validateField(field, form[field]);
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   const handleSubmit = () => {
-    if (
-      !form.email &&
-      !form.phone &&
-      !form.username &&
-      !form.password &&
-      !form.age
-    ) {
-      alert("Please fill in the details.");
+    const newErrors = { ...initialErrorState };
+    let hasEmpty = false;
+    Object.keys(form).forEach((field) => {
+      if (!form[field]) {
+        newErrors[field] =
+          field.charAt(0).toUpperCase() + field.slice(1) + " is required.";
+        hasEmpty = true;
+      }
+    });
+    if (hasEmpty) {
+      setErrors(newErrors);
       return;
     }
-    const emailError = validateField("email", form.email);
-    const phoneError = validateField("phone", form.phone);
-    const usernameError = validateField("username", form.username);
-    const passwordError = validateField("password", form.password);
-    const ageError = validateField("age", form.age);
-    const newErrors = {
-      email: emailError,
-      phone: phoneError,
-      username: usernameError,
-      password: passwordError,
-      age: ageError,
-    };
-    setErrors(newErrors);
-    if (emailError || phoneError || usernameError || passwordError || ageError)
+    if (
+      errors.email ||
+      errors.phone ||
+      errors.username ||
+      errors.password ||
+      errors.age
+    ) {
       return;
-    // alert("Submitted successfully!");
+    }
     setForm(initialFormState);
+    setErrors(initialErrorState);
     setButtonText("Submitted");
     setTimeout(() => {
       setButtonText("Submit");
@@ -179,9 +97,9 @@ function App() {
         </div>
         <div className="input-wrapper">
           <FloatingInput
+            name="email"
             value={form.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            onBlur={() => handleBlur("email")}
+            onFieldUpdate={updateField}
             error={errors.email}
             width="300px"
             height="40px"
@@ -191,9 +109,9 @@ function App() {
             maxLength={50}
           />
           <FloatingInput
+            name="phone"
             value={form.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
-            onBlur={() => handleBlur("phone")}
+            onFieldUpdate={updateField}
             error={errors.phone}
             width="300px"
             height="40px"
@@ -203,9 +121,9 @@ function App() {
             maxLength={10}
           />
           <FloatingInput
+            name="username"
             value={form.username}
-            onChange={(e) => handleChange("username", e.target.value)}
-            onBlur={() => handleBlur("username")}
+            onFieldUpdate={updateField}
             error={errors.username}
             width="300px"
             height="40px"
@@ -215,9 +133,9 @@ function App() {
             maxLength={15}
           />
           <FloatingInput
+            name="password"
             value={form.password}
-            onChange={(e) => handleChange("password", e.target.value)}
-            onBlur={() => handleBlur("password")}
+            onFieldUpdate={updateField}
             error={errors.password}
             width="300px"
             height="40px"
@@ -227,14 +145,16 @@ function App() {
             maxLength={20}
           />
           <FloatingInput
+            name="age"
             value={form.age}
-            onChange={(e) => handleChange("age", e.target.value)}
-            onBlur={() => handleBlur("age")}
+            onFieldUpdate={updateField}
             error={errors.age}
             width="300px"
             height="40px"
             labelText="Age"
             type="number"
+            minNumber={18}
+            maxNumber={100}
           />
         </div>
         <button
