@@ -10,13 +10,15 @@ function FloatingInput({
     height = "40px",
     labelText = "Username",
     type = "text",
-    minLength = 5,
-    maxLength = 15,
+    minLength,
+    maxLength,
+    minNumber,
+    maxNumber,
     ...rest
 }) {
     const handleChange = (e) => {
         let newValue = e.target.value;
-        if (name === "phone" || name === "age") {
+        if (type === "number") {
             newValue = newValue.replace(/\D/g, "");
         }
         if (name === "username") {
@@ -25,17 +27,38 @@ function FloatingInput({
                 ""
             );
         }
-        newValue = newValue.replace(/\s/g, "");
+        if (name !== "normalField") {
+            newValue = newValue.replace(/\s/g, "");
+        }
         onFieldUpdate(name, newValue, "");
     };
 
     const validateField = (field, val) => {
+        if (field === "normalField") return "";
 
+        // ff its number input with min max range.
+        if (type === "number" && (minNumber !== undefined || maxNumber !== undefined)) {
+            if (!val) {
+                return `${labelText} is required.`;
+            }
+            const numberValue = Number(val);
+            if (minNumber !== undefined && numberValue < minNumber) {
+                return `Minimum ${labelText} is ${minNumber}.`;
+            }
+            if (maxNumber !== undefined && numberValue > maxNumber) {
+                return `Maximum ${labelText} is ${maxNumber}.`;
+            }
+            return "";
+        }
+
+        // default validations for other field types.
         if (/\s/.test(val) && !["fullName"].includes(field)) {
             return "Spaces are not allowed.";
         }
         const trimmedValue = val;
         let errorMessage = "";
+
+        // other field validations based on field types.
         switch (field) {
             case "email":
                 if (!trimmedValue) errorMessage = "Email is required.";
@@ -75,63 +98,9 @@ function FloatingInput({
                     errorMessage =
                         "Password must include uppercase, lowercase, digit, and special character.";
                 break;
-            case "age":
-                if (!trimmedValue) {
-                    errorMessage = "Age is required.";
-                } else {
-                    const ageNumber = Number(trimmedValue);
-                    if (ageNumber < 18) {
-                        errorMessage = "Minimum age is 18.";
-                    } else if (ageNumber > 100) {
-                        errorMessage = "Maximum age is 100.";
-                    }
-                }
-                break;
-            case "panCard":
-                if (!trimmedValue) errorMessage = "PAN card number is required.";
-                else if (!regexPatterns.panCard.test(trimmedValue))
-                    errorMessage = "Invalid PAN card number.";
-                break;
-            case "bankAccount":
-                if (!trimmedValue) errorMessage = "Bank account number is required.";
-                else if (!regexPatterns.bankAccount.test(trimmedValue))
-                    errorMessage = "Invalid bank account number.";
-                break;
-            case "ifsc":
-                if (!trimmedValue) errorMessage = "IFSC code is required.";
-                else if (!regexPatterns.ifsc.test(trimmedValue))
-                    errorMessage = "Invalid IFSC code.";
-                break;
-            case "url":
-                if (!trimmedValue) errorMessage = "URL is required.";
-                else if (!regexPatterns.url.test(trimmedValue))
-                    errorMessage = "Invalid URL.";
-                break;
-            case "address":
-                if (!trimmedValue) errorMessage = "Address is required.";
-                else if (trimmedValue.length < 5)
-                    errorMessage = "Address must be at least 5 characters long.";
-                break;
-            case "zipCode":
-                if (!trimmedValue) errorMessage = "Zip code is required.";
-                else if (!regexPatterns.zipCode.test(trimmedValue))
-                    errorMessage = "Invalid zip code.";
-                break;
-            case "ssn":
-                if (!trimmedValue) errorMessage = "SSN is required.";
-                else if (!regexPatterns.ssn.test(trimmedValue))
-                    errorMessage = "Invalid SSN format.";
-                break;
-            case "ipv4":
-                if (!trimmedValue) errorMessage = "IPv4 address is required.";
-                else if (!regexPatterns.ipv4.test(trimmedValue))
-                    errorMessage = "Invalid IPv4 address.";
-                break;
-            case "alphanumeric":
-                if (!trimmedValue) errorMessage = "This field is required.";
-                else if (!regexPatterns.alphanumeric.test(trimmedValue))
-                    errorMessage = "Only letters and numbers are allowed.";
-                break;
+
+            // we can add more cases here as needed
+
             default:
                 if (!trimmedValue) {
                     errorMessage =
@@ -148,10 +117,7 @@ function FloatingInput({
     };
 
     return (
-        <div
-            className={`input-container ${error ? "error" : ""}`}
-            style={{ width, height }}
-        >
+        <div className={`input-container ${error ? "error" : ""}`} style={{ width, height }}>
             <input
                 type={type}
                 id={`floatingInput-${name}`}

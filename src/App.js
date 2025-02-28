@@ -49,6 +49,7 @@ function App() {
     ) {
       return;
     }
+
     setForm(initialFormState);
     setErrors(initialErrorState);
     setButtonText("Submitted");
@@ -96,6 +97,20 @@ function App() {
           </p>
         </div>
         <div className="input-wrapper">
+          {/* for normal text field */}
+
+          {/* <FloatingInput
+            name="normalField"
+            value={form.normalField}
+            onFieldUpdate={updateField}
+            error={errors.normalField}
+            width="300px"
+            height="40px"
+            labelText="Normal Field"
+            type="text"
+            minLength={2}
+            maxLength={50}
+          /> */}
           <FloatingInput
             name="email"
             value={form.email}
